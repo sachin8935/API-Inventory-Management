@@ -1,0 +1,24 @@
+FROM python:3.12.5-alpine3.20@sha256:bb5d0ac04679d78a1258e7dfacdb4d9bdefe9a10480eaf9b4bb09445d076369f
+
+WORKDIR /inventory-management-system-api-run
+
+COPY README.md pyproject.toml ./
+# Copy inventory_management_system_api source files
+COPY inventory_management_system_api/ inventory_management_system_api/
+
+RUN set -eux; \
+    \
+    # Install pip dependencies \
+    python -m pip install --no-cache-dir .; \
+    \
+    # Create loging.ini from its .example file \
+    cp inventory_management_system_api/logging.example.ini inventory_management_system_api/logging.ini; \
+    \
+    # Create a non-root user to run as \
+    addgroup -S inventory-management-system-api; \
+    adduser -S -D -G inventory-management-system-api -H -h /inventory-management-system-api-run inventory-management-system-api;
+
+USER inventory-management-system-api
+
+CMD ["uvicorn", "inventory_management_system_api.main:app", "--app-dir", "/inventory-management-system-api-run", "--host", "0.0.0.0", "--port", "8000"]
+EXPOSE 8000

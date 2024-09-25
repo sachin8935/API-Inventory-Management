@@ -1,0 +1,49 @@
+[project]
+name = "inventory-management-system-api"
+description = "Python microservice providing an API for the Inventory Management System."
+readme = "README.md"
+requires-python = ">=3.12"
+version = "1.0.0"
+
+dependencies = [
+    "cryptography==43.0.1",
+    "fastapi[all]==0.114.2",
+    "PyJWT==2.9.0",
+    "pymongo==4.8.0",
+    "uvicorn==0.30.6"
+]
+
+[project.urls]
+"Repository" = "https://github.com/ral-facilities/inventory-management-system-api"
+
+[project.optional-dependencies]
+code-analysis = [
+    "pylint==3.2.7",
+    "inventory-management-system-api[test]"
+]
+
+formatting = [
+    "black==24.8.0"
+]
+
+test = [
+    "pytest==8.3.3",
+    "pytest-asyncio==0.24.0",
+    "pytest-cov==5.0.0",
+    "pytest-env==1.1.4"
+]
+
+scripts = [
+    "faker==28.4.1",
+    "requests==2.32.3"
+]
+
+dev = [
+    "inventory-management-system-api[code-analysis]",
+    "inventory-management-system-api[formatting]",
+    "inventory-management-system-api[test]",
+    "inventory-management-system-api[scripts]"
+]
+
+[tool.setuptools]
+packages = ["inventory_management_system_api"]
